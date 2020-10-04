@@ -1,6 +1,6 @@
 .Grid {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(var(--board-size), 1fr);
 
   --gap-size: 1px;
 }
