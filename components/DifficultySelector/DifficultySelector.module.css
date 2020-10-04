@@ -1,0 +1,9 @@
+.DifficultySelector {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
+}
+
+.select {
+  margin-top: 8px;
+}
