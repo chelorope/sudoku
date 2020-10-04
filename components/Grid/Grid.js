@@ -4,16 +4,10 @@ import Cell from "../Cell/Cell";
 
 import styles from "./Grid.module.css";
 
-const SIZE = 9;
-
-const matrix = Array.from({ length: 9 }, (_, i) => [...Array(9)]);
-
-const Grid = () => {
-  const [values, setValue] = useState(matrix);
-  const [selected, setSelected] = useState([0, 0]);
+const Grid = ({ values, onSelect, selected }) => {
   return (
     <div className={styles.Grid}>
-      {matrix.map((column, columnIndex) => (
+      {values.map((column, columnIndex) => (
         <div className={styles.column} key={columnIndex}>
           {column.map((item, rowIndex) => (
             <Cell
@@ -24,7 +18,7 @@ const Grid = () => {
               isSelected={
                 columnIndex === selected[0] && rowIndex === selected[1]
               }
-              onSelect={setSelected}
+              onSelect={onSelect}
             />
           ))}
         </div>

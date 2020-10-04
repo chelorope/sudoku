@@ -3,7 +3,7 @@ import classnames from "classnames";
 
 import styles from "./Cell.module.css";
 
-const Cell = ({ column, row, onSelect, isSelected }) => {
+const Cell = ({ value, column, row, onSelect, isSelected }) => {
   const onClick = () => {
     onSelect([column, row]);
   };
@@ -11,7 +11,9 @@ const Cell = ({ column, row, onSelect, isSelected }) => {
     <div
       className={classnames(styles.Cell, { [styles.selected]: isSelected })}
       onClick={onClick}
-    ></div>
+    >
+      {value}
+    </div>
   );
 };
 

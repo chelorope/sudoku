@@ -1,10 +1,14 @@
 .Cell {
   border: 1px solid #000;
   cursor: pointer;
+  display: flex;
   height: 40px;
   position: relative;
   width: 40px;
   margin-bottom: var(--gap-size);
+  transition: transform 0.3s ease;
+  justify-content: center;
+  align-items: center;
 }
 
 .Cell:nth-child(3n) {
@@ -18,5 +22,7 @@
 }
 
 .Cell.selected {
-  background-color: blue;
+  background-color: #c5c5ff;
+  transform: scale(1.2);
+  z-index: 10;
 }

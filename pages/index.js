@@ -1,8 +1,7 @@
 import React from "react";
 import Head from "next/head";
 
-import Grid from "../components/Grid/Grid";
-import Selector from "../components/Selector/Selector";
+import Game from "../components/Game/Game";
 
 import styles from "../styles/Home.module.css";
 
@@ -15,8 +14,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <Grid />
-        <Selector />
+        <Game />
       </main>
 
       <footer className={styles.footer}>
