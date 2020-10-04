@@ -1,16 +1,29 @@
 .Selector {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  height: 100px;
+  align-self: flex-start;
+  align-items: center;
   background-color: white;
   border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
   margin-left: 20px;
   width: 100px;
   z-index: 1;
   align-content: center;
 }
 
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 10px;
+}
+
 .number {
-  text-align: center;
   cursor: pointer;
+  text-align: center;
+}
+
+.delete {
+  cursor: pointer;
+  margin: 10px 0;
 }
