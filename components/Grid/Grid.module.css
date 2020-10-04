@@ -1,4 +1,14 @@
 .Grid {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
+
+  --gap-size: 1px;
+}
+
+.column:nth-child(3n) {
+  border-right: var(--gap-size) solid #000;
+}
+
+.column:last-child() {
+  border-right: 0;
 }

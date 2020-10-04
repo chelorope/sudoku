@@ -1,5 +1,22 @@
 .Cell {
   border: 1px solid #000;
+  cursor: pointer;
   height: 40px;
+  position: relative;
   width: 40px;
+  margin-bottom: var(--gap-size);
+}
+
+.Cell:nth-child(3n) {
+  border-bottom: calc(var(--gap-size) * 2) solid #000;
+  margin-bottom: 0;
+}
+
+.Cell:last-child() {
+  border-bottom: 0;
+  margin-bottom: var(--gap-size);
+}
+
+.Cell.selected {
+  background-color: blue;
 }
