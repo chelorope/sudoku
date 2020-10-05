@@ -58,19 +58,14 @@ export const generateRandomGame = (difficulty) => {
     })),
   ]);
   for (let i = 0; i < initialValuesCount; i++) {
-    let position;
-    let isPositionInvalid = false;
+    let position, value, isPositionInvalid, isValueInvalid;
     do {
       position = [getRandomInt(0, 8), getRandomInt(0, 8)];
       isPositionInvalid =
         typeof matrix[position[0]][position[1]].number !== "undefined";
-    } while (isPositionInvalid);
-    let value;
-    let isValueInvalid;
-    do {
       value = getRandomInt();
       isValueInvalid = getInvalidValues(matrix, position).indexOf(value) !== -1;
-    } while (isValueInvalid);
+    } while (isPositionInvalid || isValueInvalid);
     matrix[position[0]][position[1]] = { number: value, isFixed: true };
   }
   return matrix;
@@ -86,7 +81,6 @@ export const saveGameStatus = ({ values, difficulty }) => {
 };
 
 export const getGameStatus = () => {
-  // isBrowser && console.log(window.localStorage.getItem("game-status-values"));
   const values =
     (isBrowser &&
       JSON.parse(window.localStorage.getItem("game-status-values"))) ||
