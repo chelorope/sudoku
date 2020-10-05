@@ -13,21 +13,22 @@ import {
 import styles from "./Game.module.css";
 
 const Game = () => {
-  const [values, setValue] = useState(getGameStatus());
+  const [values, setValue] = useState(getGameStatus().values);
   const [selected, setSelected] = useState([0, 0]);
   const [invalidValues, setInvalidValues] = useState([]);
-  const [difficulty, setDifficulty] = useState("medium");
+  const [difficulty, setDifficulty] = useState(getGameStatus().difficulty);
 
   const handleValueSelected = (value) => {
-    setValue(() => {
-      const nextValues = [...values];
-      nextValues[selected[0]][selected[1]] = value;
-      return nextValues;
-    });
+    if (values[selected[0]][selected[1]].isFixed) {
+      return;
+    }
+    values[selected[0]][selected[1]].number = value;
+    setValue([...values]);
   };
 
-  const handleDifficultyChange = (value) => {
-    setDifficulty(value);
+  const handleDifficultyChange = (diff) => {
+    setDifficulty(diff);
+    saveGameStatus({ difficulty: diff });
   };
 
   const handleRestart = useCallback(() => {
@@ -36,7 +37,7 @@ const Game = () => {
 
   useEffect(() => {
     setInvalidValues(getInvalidValues(values, selected));
-    saveGameStatus(values);
+    saveGameStatus({ values });
   }, [selected, values]);
   return (
     <div className={styles.Game} style={{ "--board-size": values.length }}>

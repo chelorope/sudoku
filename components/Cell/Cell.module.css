@@ -26,3 +26,8 @@
   transform: scale(1.2);
   z-index: 10;
 }
+
+.Cell.fixed {
+  font-weight: bold;
+  color: #000069;
+}

@@ -3,7 +3,7 @@ import classnames from "classnames";
 
 import styles from "./Selector.module.css";
 
-const Selector = ({ onSelect, invalidValues = [3] }) => {
+const Selector = ({ onSelect, invalidValues }) => {
   return (
     <div className={styles.Selector}>
       <div className={styles.numbers}>

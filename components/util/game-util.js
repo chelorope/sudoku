@@ -9,16 +9,16 @@ export const getInvalidValues = (values, [column, row]) => {
   for (let i = 0; i <= values.length - 1; i++) {
     for (let j = 0; j <= values[0].length - 1; j++) {
       if (
-        values[i][j] &&
+        values[i][j].number &&
         (i === column ||
           j === row ||
           (i >= initialColumn &&
             i <= initialColumn + 2 &&
             j >= initialRow &&
             j <= initialRow + 2)) &&
-        invalid.indexOf(values[i][j]) === -1
+        invalid.indexOf(values[i][j].number) === -1
       ) {
-        values[i][j] && invalid.push(values[i][j]);
+        values[i][j] && invalid.push(values[i][j].number);
       }
     }
   }
@@ -31,8 +31,7 @@ const getRandomInt = (min = 1, max = 9) => {
   return Math.floor(Math.random() * (maxAbs - minAbs + 1)) + minAbs;
 };
 
-export const generateRandomGame = (size, difficulty) => {
-  console.log(size, difficulty);
+export const generateRandomGame = (difficulty) => {
   let initialValuesCount;
   switch (difficulty) {
     case "evil":
@@ -53,7 +52,10 @@ export const generateRandomGame = (size, difficulty) => {
       break;
   }
   const matrix = Array.from({ length: GAME_SIZE }, (_, i) => [
-    ...Array(GAME_SIZE),
+    ...Array.from({ length: GAME_SIZE }, (_, i) => ({
+      number: undefined,
+      isFixed: false,
+    })),
   ]);
   for (let i = 0; i < initialValuesCount; i++) {
     let position;
@@ -61,7 +63,7 @@ export const generateRandomGame = (size, difficulty) => {
     do {
       position = [getRandomInt(0, 8), getRandomInt(0, 8)];
       isPositionInvalid =
-        typeof matrix[position[0]][position[1]] !== "undefined";
+        typeof matrix[position[0]][position[1]].number !== "undefined";
     } while (isPositionInvalid);
     let value;
     let isValueInvalid;
@@ -69,17 +71,27 @@ export const generateRandomGame = (size, difficulty) => {
       value = getRandomInt();
       isValueInvalid = getInvalidValues(matrix, position).indexOf(value) !== -1;
     } while (isValueInvalid);
-    matrix[position[0]][position[1]] = value;
+    matrix[position[0]][position[1]] = { number: value, isFixed: true };
   }
   return matrix;
 };
 
-export const saveGameStatus = (gameStatus) => {
-  isBrowser &&
-    window.localStorage.setItem("game-status", JSON.stringify(gameStatus));
+export const saveGameStatus = ({ values, difficulty }) => {
+  values &&
+    isBrowser &&
+    window.localStorage.setItem("game-status-values", JSON.stringify(values));
+  difficulty &&
+    isBrowser &&
+    window.localStorage.setItem("game-status-difficulty", difficulty);
 };
 
 export const getGameStatus = () => {
-  const gameStatus = isBrowser && window.localStorage.getItem("game-status");
-  return gameStatus ? JSON.parse(gameStatus) : generateRandomGame();
+  // isBrowser && console.log(window.localStorage.getItem("game-status-values"));
+  const values =
+    (isBrowser &&
+      JSON.parse(window.localStorage.getItem("game-status-values"))) ||
+    generateRandomGame();
+  const difficulty =
+    isBrowser && window.localStorage.getItem("game-status-difficulty");
+  return { values, difficulty };
 };
